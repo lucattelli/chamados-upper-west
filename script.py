@@ -158,8 +158,14 @@ for idx, row in enumerate(dm0):
         if sc == "1":  # old value
             current_row[scidx] = previous_row[scidx]
 
+    # return match.group(0) if match else None
+
+    match = re.search(r'\b\d{5}\b', current_row[2])
+    numero_chamado = match.group(0) if match else ""
+
     output.append(
         {
+            "chamado": numero_chamado,
             "progresso": current_row[0],
             "rotulos": current_row[1],
             "nome_tarefa": current_row[2],
@@ -171,7 +177,7 @@ for idx, row in enumerate(dm0):
 
 with open("data/output.csv", "w", encoding="utf-8") as file:
     writer = csv.DictWriter(
-        file, fieldnames=["progresso", "rotulos", "nome_tarefa", "descricao"]
+        file, fieldnames=["chamado", "progresso", "rotulos", "nome_tarefa", "descricao"]
     )
     writer.writeheader()
     writer.writerows(output)
